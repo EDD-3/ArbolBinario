@@ -20,7 +20,14 @@ namespace ArbolBinario
         {
             _root = null;
             Flag = false;
+            NodeCount = 0;
         }
+
+        public int height() => (_root is null) ? 0 : _root.Height;
+        
+
+        public int size() => NodeCount;
+
 
         public string searchTree(int ValueToSearch) => searchTree(_root, ValueToSearch);
         private string searchTree(Node n,int valueToSearch)
@@ -41,11 +48,163 @@ namespace ArbolBinario
                return n.Value.ToString() +"<-"+ searchTree(n.Left, valueToSearch);
             }
     
-                return "EL risas estuvo aqui";
+                return "EL bromas estuvo aqui";
             
         }
 
-        public int obtainFe(Node x)
+        public Boolean contains(int value) => contains(_root, value);
+
+        public Boolean contains(Node node, int value)
+        {
+            if (node == null) return false;
+
+            int cmp = value.CompareTo(node.Value);
+
+            if (cmp < 0) return contains(node.Left, value);
+
+            if (cmp > 0) return contains(node.Right, value);
+
+            return true;
+        }
+
+        public Boolean insert(int value)
+        {
+            if (value == null) return false;
+
+            if (!contains(_root, value))
+            {
+                _root = insert(_root, value);
+                NodeCount++;
+                return true;
+            }
+
+            return false;
+        }
+
+        private Node insert(Node node, int value)
+        {
+            // Base case.
+            if (node == null) return new Node (value);
+
+            // Compare current value to the value in the node.
+            int cmp = value.CompareTo(node.Value);
+
+            // Insert node in left subtree.
+            if (cmp < 0)
+            {
+                node.Left = insert(node.Left, value);
+                ;
+
+                // Insert node in right subtree.
+            }
+            else
+            {
+                node.Right = insert(node.Right, value);
+            }
+
+            // Update balance factor and height values.
+            update(node);
+
+            // Re-balance tree.
+            return balance(node);
+        }
+
+        private void update(Node node)
+        {
+            int leftNodeHeight = (node.Left == null) ? -1 : node.Left.Height;
+            int rightNodeHeight = (node.Right == null) ? -1 : node.Right.Height;
+
+            // Update this node's height.
+            node.Height = 1 + Math.Max(leftNodeHeight, rightNodeHeight);
+
+            // Update balance factor.
+            node.Bf = rightNodeHeight - leftNodeHeight;
+        }
+
+        // Re-balance a node if its balance factor is +2 or -2.
+        private Node balance(Node node)
+        {
+
+            // Left heavy subtree.
+            if (node.Bf == -2)
+            {
+
+                // Left-Left case.
+                if (node.Left.Bf <= 0)
+                {
+                    return leftLeftCase(node);
+
+                    // Left-Right case.
+                }
+                else
+                {
+                    return leftRightCase(node);
+                }
+
+                // Right heavy subtree needs balancing.
+            }
+            else if (node.Bf == +2)
+            {
+
+                // Right-Right case.
+                if (node.Right.Bf >= 0)
+                {
+                    return rightRightCase(node);
+
+                    // Right-Left case.
+                }
+                else
+                {
+                    return rightLeftCase(node);
+                }
+            }
+
+            // Node either has a balance factor of 0, +1 or -1 which is fine.
+            return node;
+        }
+
+        private Node leftLeftCase(Node node)
+        {
+            return rightRotation(node);
+        }
+
+        private Node leftRightCase(Node node)
+        {
+            node.Left = leftRotation(node.Left);
+            return leftLeftCase(node);
+        }
+
+        private Node rightRightCase(Node node)
+        {
+            return leftRotation(node);
+        }
+
+        private Node rightLeftCase(Node node)
+        {
+            node.Right = rightRotation(node.Right);
+            return rightRightCase(node);
+        }
+
+        private Node leftRotation(Node node)
+        {
+            Node newParent = node.Right;
+            node.Right = newParent.Left;
+            newParent.Left = node;
+            update(node);
+            update(newParent);
+            return newParent;
+        }
+
+        private Node rightRotation(Node node)
+        {
+            Node newParent = node.Left;
+            node.Left = newParent.Right;
+            newParent.Right = node;
+            update(node);
+            update(newParent);
+            return newParent;
+        }
+        /**public int obtainFe(Node x)
         {
             if (x == null)
                 return -1;
@@ -171,7 +330,7 @@ namespace ArbolBinario
             {
                 _root = insertAVL(n, _root);
             }
-        }
+        } **/
 
         public List<int> preOrden()
         {

@@ -12,8 +12,9 @@ namespace ArbolBinario
         public int Value { get; set; }
         public Node Left { get; set; }
         public Node Right { get; set; }
-        public int Fe { get; set; }
+        public int  Bf { get; set; }
 
+        public int Height { get; set; }
         public Node()
         {
 
@@ -21,7 +22,6 @@ namespace ArbolBinario
         public Node(int value)
         {
             this.Value = value;
-            this.Fe = 0;
 
         }
     }
