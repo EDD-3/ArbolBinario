@@ -17,18 +17,19 @@ namespace ArbolBinario
 
             for ( int i= 0; i <= 1000 ; i++)
             {
-                tree.Insert(rnd.Next(0, 2000));
+                tree.Insert(rnd.Next(0, 20));
             }
 
             //tree.Flag = true;
 
-
+            /**
+            
             Console.WriteLine("Nodos en preorden");
-            foreach (int nodo in tree.preOrden())
+            foreach (int nodo in tree.postOrden())
             {
                 Console.Write(nodo + " ");
             }
-
+            
             Console.WriteLine("\nNodos en postorden");
             foreach (int nodo in tree.postOrden())
             {
@@ -39,19 +40,45 @@ namespace ArbolBinario
             foreach (int nodo in tree.inOrden())
             {
                 Console.Write(nodo + " ");
-            }
+            }**/
+
 
             Console.WriteLine("\n");
+            
 
-            MessageBox.Show(tree.NodeCount.ToString());
+            //MessageBox.Show(tree.NodeCount.ToString());
+
+            tree._root = tree.buildTree(tree._root);
+
+            /**
+            Console.WriteLine("Nodos en preorden");
+            foreach (int nodo in tree.preOrden())
+            {
+                Console.Write(nodo + " ");
+            }**/
+
+
+
+            //tree.treeToVine(tree.getRoot);
+            //tree.vineToTree(tree.getRoot, tree.size);
+
 
             Console.WriteLine("Ingresa numero");
             int find = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\n" + tree.searchTree(find));
+            
+            Console.WriteLine("\n");
+            tree.print2D(tree._root);
+            // tree.DisplayTree();
+
+            Console.WriteLine("\n");
+            Console.WriteLine("Nodos en preorden");
+            foreach (int nodo in tree.preOrden())
+            {
+                Console.Write(nodo + " ");
+            }
             Console.ReadKey();
 
-            // tree.DisplayTree();
- 
 
         }
     }
