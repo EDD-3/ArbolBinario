@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,37 +7,31 @@ using System.Threading.Tasks;
 
 namespace ArbolBinario
 {
-    class Node
+    class TreePrinter
     {
-        
-        public int Value { get; set; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
-        public int  Bf { get; set; }
 
-        public int Height { get; set; }
-        public Node()
+        /** Node that can be printed */
+        public interface PrintableNode
         {
 
-        }
-        public Node(int value)
-        {
-            this.Value = value;
+            // Item left child
+            PrintableNode getLeft();
 
-        }
+            // Item right child
+            PrintableNode getRight();
 
-        public String getText()
-        {
-            return Value.ToString();
+            // Item text to be printed
+            String getText();
         }
 
-        /** public static String getTreeDisplay(Node root)
+        // Print a binary tree.
+        public static String getTreeDisplay(PrintableNode root)
         {
 
             StringBuilder sb = new StringBuilder();
             List<List<String>> lines = new List<List<String>>();
-            List<Node> level = new List<Node>();
-            List<Node> next = new List<Node>();
+            List<PrintableNode> level = new List<PrintableNode>();
+            List<PrintableNode> next = new List<PrintableNode>();
 
             level.Add(root);
             int nn = 1;
@@ -46,7 +41,7 @@ namespace ArbolBinario
             {
                 nn = 0;
                 List<String> line = new List<String>();
-                foreach (Node n in level)
+                foreach (PrintableNode n in level)
                 {
                     if (n == null)
                     {
@@ -60,11 +55,11 @@ namespace ArbolBinario
                         line.Add(aa);
                         if (aa.Length > widest) widest = aa.Length;
 
-                        next.Add(n.Left);
-                        next.Add(n.Right);
+                        next.Add(n.getLeft());
+                        next.Add(n.getRight());
 
-                        if (n.Left != null) nn++;
-                        if (n.Right != null) nn++;
+                        if (n.getLeft() != null) nn++;
+                        if (n.getRight() != null) nn++;
                     }
                 }
 
@@ -72,7 +67,7 @@ namespace ArbolBinario
 
                 lines.Add(line);
 
-                List<Node> tmp = level;
+                List<PrintableNode> tmp = level;
                 level = next;
                 next = tmp;
                 next.Clear();
@@ -148,7 +143,6 @@ namespace ArbolBinario
                 perpiece /= 2;
             }
             return sb.ToString();
-        }**/
+        }
     }
 }
-

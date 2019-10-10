@@ -17,7 +17,7 @@ namespace ArbolBinario
 
             for ( int i= 0; i <= 1000 ; i++)
             {
-                tree.insert(rnd.Next(0, 101));
+                tree.Insert(rnd.Next(0, 2000));
             }
 
             //tree.Flag = true;
@@ -41,12 +41,13 @@ namespace ArbolBinario
                 Console.Write(nodo + " ");
             }
 
+            Console.WriteLine("\n");
+
             MessageBox.Show(tree.NodeCount.ToString());
 
             Console.WriteLine("Ingresa numero");
             int find = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\n" + tree.searchTree(find));
-            Console.WriteLine("\n" + tree.height());
             Console.ReadKey();
 
             // tree.DisplayTree();

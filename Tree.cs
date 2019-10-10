@@ -23,12 +23,9 @@ namespace ArbolBinario
             NodeCount = 0;
         }
 
-        public int height() => (_root is null) ? 0 : _root.Height;
-        
-
-        public int size() => NodeCount;
-
-
+        public Node getRoot => _root;
+        public int height => (_root is null) ? 0 : _root.Height;
+        public int size => NodeCount;
         public string searchTree(int ValueToSearch) => searchTree(_root, ValueToSearch);
         private string searchTree(Node n,int valueToSearch)
         {
@@ -52,7 +49,7 @@ namespace ArbolBinario
             
         }
 
-        public Boolean contains(int value) => contains(_root, value);
+        /**public Boolean contains(int value) => contains(_root, value);
 
         public Boolean contains(Node node, int value)
         {
@@ -204,6 +201,7 @@ namespace ArbolBinario
             update(newParent);
             return newParent;
         }
+        **/
         /**public int obtainFe(Node x)
         {
             if (x == null)
@@ -479,6 +477,7 @@ namespace ArbolBinario
 
 
         }
+
         private void DisplayTree(Node root)
         {
             if (root is null) return;
