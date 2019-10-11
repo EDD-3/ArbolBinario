@@ -17,8 +17,23 @@ namespace ArbolBinario
 
             for ( int i= 0; i <= 1000 ; i++)
             {
-                tree.Insert(rnd.Next(0, 20));
+                tree.Insert(rnd.Next(0, 7));
             }
+             
+            /**
+            Node test = tree.createRightVine(tree._root);
+            int count = tree.getNodeCount(test);
+            tree.Insert(tree.balanceVine(test, count).Value);
+            tree.print2D(tree._root);
+
+
+            Console.WriteLine("Nodos en preorden");
+            foreach (int nodo in tree.preOrden())
+            {
+                Console.Write(nodo + " ");
+            }
+            Console.ReadKey();
+            **/
 
             //tree.Flag = true;
 
@@ -62,22 +77,32 @@ namespace ArbolBinario
             //tree.treeToVine(tree.getRoot);
             //tree.vineToTree(tree.getRoot, tree.size);
 
-
-            Console.WriteLine("Ingresa numero");
-            int find = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\n" + tree.searchTree(find));
-            
-            Console.WriteLine("\n");
-            tree.print2D(tree._root);
-            // tree.DisplayTree();
-
-            Console.WriteLine("\n");
-            Console.WriteLine("Nodos en preorden");
-            foreach (int nodo in tree.preOrden())
+            try
             {
-                Console.Write(nodo + " ");
+                Console.WriteLine("Ingresa numero");
+                int find = Math.Abs(Convert.ToInt32(Console.ReadLine()));
+                Console.WriteLine("\n" + tree.searchTree(find));
+
+                Console.WriteLine("\n");
+                tree.print2D(tree._root);
+         
+
+                Console.WriteLine("\n");
+                Console.WriteLine("Nodos en preorden");
+
+                foreach (int nodo in tree.preOrden())
+                {
+                    Console.Write(nodo + " ");
+                }
+                Console.ReadKey();
+
+            } catch (FormatException c)
+            {
+                Console.WriteLine(c);
+                Console.ReadKey();
+
             }
-            Console.ReadKey();
+
 
 
         }

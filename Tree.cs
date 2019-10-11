@@ -21,12 +21,12 @@ namespace ArbolBinario
             _root = null;
             Flag = false;
             NodeCount = 0;
-            
+
         }
 
         public int size => NodeCount;
         public string searchTree(int ValueToSearch) => searchTree(_root, ValueToSearch);
-        private string searchTree(Node n,int valueToSearch)
+        private string searchTree(Node n, int valueToSearch)
         {
             if (n is null)
                 return "Elemento no encontrado";
@@ -37,15 +37,15 @@ namespace ArbolBinario
             }
             else if (valueToSearch > n.Value)
             {
-               return n.Value.ToString() +"->"+ searchTree(n.Right,valueToSearch);
+                return n.Value.ToString() + "->" + searchTree(n.Right, valueToSearch);
             }
             else if (valueToSearch < n.Value)
             {
-               return n.Value.ToString() +"<-"+ searchTree(n.Left, valueToSearch);
+                return n.Value.ToString() + "<-" + searchTree(n.Left, valueToSearch);
             }
-    
-                return "EL bromas estuvo aqui";
-            
+
+            return "EL bromas estuvo aqui";
+
         }
         public List<int> preOrden()
         {
@@ -76,7 +76,7 @@ namespace ArbolBinario
             }
         }
 
-        
+
         public List<int> postOrden()
         {
             postOrden(_root);
@@ -152,7 +152,7 @@ namespace ArbolBinario
         }
         private void InsertRec(Node root, Node newNode)
         {
-            
+
 
             if (root is null)
             {
@@ -160,9 +160,9 @@ namespace ArbolBinario
             }
 
             if (root.Value == newNode.Value)
-            
+
                 root.Value = newNode.Value;
-            
+
             else
             {
                 if (newNode.Value < root.Value)
@@ -184,20 +184,21 @@ namespace ArbolBinario
                         root.Right = newNode;
                         NodeCount++;
                     }
-                        
+
                     else
                         InsertRec(root.Right, newNode);
-                } 
+                }
             }
 
         }
-
+        //Day–Stout–Warren algorithm
+       /**
         public void treeToVine(Node root)
         {
             Node temp;
             Node tail = root;
             Node rest = tail.Right;
-            
+
             while (rest != null)
             {
                 if (rest.Left == null)
@@ -218,7 +219,7 @@ namespace ArbolBinario
 
         public void vineToTree(Node root, double size)
         {
-            double leaves = size + 1 - Math.Pow(2,Math.Log(size+1 , 2));
+            double leaves = size + 1 - Math.Pow(2, Math.Log(size + 1, 2));
             compress(root, Convert.ToInt32(leaves));
             size = size - leaves;
 
@@ -230,10 +231,10 @@ namespace ArbolBinario
 
         }
 
-        public void compress (Node root, int count)
+        public void compress(Node root, int count)
         {
             Node scanner;
-            Node child; 
+            Node child;
             scanner = root;
 
             for (int i = 0; i < count; i++)
@@ -251,6 +252,8 @@ namespace ArbolBinario
                 scanner.Left = child;
             }
         }
+        **/
+
 
         private void storeBSTNodes(Node root, List<Node> nodes)
         {
@@ -258,16 +261,16 @@ namespace ArbolBinario
             {
                 return;
             }
-            
-                storeBSTNodes(root.Left, nodes);
-                nodes.Add(root);
-                storeBSTNodes(root.Right, nodes);
-         
+
+            storeBSTNodes(root.Left, nodes);
+            nodes.Add(root);
+            storeBSTNodes(root.Right, nodes);
+
         }
 
         private Node buildTreeUtil(List<Node> nodes, int start, int end)
         {
-            if(start > end)
+            if (start > end)
             {
                 return null;
             }
@@ -321,5 +324,94 @@ namespace ArbolBinario
             print2DUtil(root, 0);
         }
 
+        //DSW
+        /**
+        public Node leftRotate(Node n)
+        {
+            if (n.Right != null)
+            {
+                Node rightChild = n.Right;
+                n.Right = rightChild.Right;
+                rightChild.Right = rightChild.Left;
+                rightChild.Left = n.Left;
+                n.Left = rightChild;
+
+                int temp = n.Value;
+                n.Value = rightChild.Value;
+                rightChild.Value = temp;
+            }
+            return n;
+        }
+
+        public Node rightRotate(Node n)
+        {
+            if(n.Left != null)
+            {
+                Node leftChild = n.Left;
+                n.Left = leftChild.Left;
+                leftChild.Left = leftChild.Right;
+                leftChild.Right = n.Right;
+                n.Right = leftChild;
+
+                int temp = n.Value;
+                n.Value = leftChild.Value;
+                leftChild.Value = temp;
+            }
+            return n;
+        }
+
+        public Node createRightVine(Node root)
+        {
+
+            while (root.Left != null)
+            {
+                root = rightRotate(root);
+            }
+            if (root.Right != null)
+            {
+                root.Right = createRightVine(root.Right);
+            }
+            return root;
+        }
+
+        public int getNodeCount(Node root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            int i = 1;
+
+            while (root.Right != null)
+            {
+                root = root.Right;
+                i++;
+
+            }
+            return i;
+        }
+
+        public Node balanceVine(Node root, int nodeCount)
+        {
+            int times = (int)Math.Log(nodeCount, 2);
+            Node newRoot = root;
+
+            for (int i = 0; i < times; i++)
+            {
+                newRoot = leftRotate(newRoot);
+                root = newRoot.Right;
+                for (int j = 0; j < nodeCount / 2 - 1; j++)
+                {
+                    root = leftRotate(root);
+                    root = root.Right;
+                }
+
+                nodeCount >>= 1;
+            }
+            return newRoot;
+        }
+        **/
+
     }
 }
+

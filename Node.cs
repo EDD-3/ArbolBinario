@@ -14,8 +14,8 @@ namespace ArbolBinario
         public Node Right { get; set; }
         public Node()
         {
-
-            
+            Left = null;
+            Right = null;
         }
         public Node(int value)
         {
